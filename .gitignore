@@ -17,3 +17,6 @@ target/
 # Added by cargo
 
 /target
+
+# Ignore the result produced by nix build
+/result
