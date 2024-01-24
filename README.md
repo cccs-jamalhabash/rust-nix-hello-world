@@ -9,3 +9,7 @@ Use ```nix build``` to build the binary.
 Use ```nix build .#dockerImage``` to build the docker image. (docker image is from:scratch and contains the binary).
 
 For nix build to work, you do need to generate the cargo.lock and commit it to your repo. You can do that with ```cargo generate-lockfile``` and then commit with git.
+
+## Resources
+- https://zero-to-nix.com/
+- https://fasterthanli.me/series/building-a-rust-service-with-nix/part-11#building-catscii-with-nix-build
