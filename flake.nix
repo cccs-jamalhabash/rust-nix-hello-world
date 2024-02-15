@@ -7,7 +7,7 @@
   };
 
   # Flake outputs
-  outputs = { self, nixpkgs, rust-overlay }:
+  outputs = { self, nixpkgs, rust-overlay}:
     let
       # Overlays enable you to customize the Nixpkgs attribute set
       overlays = [
@@ -16,7 +16,9 @@
         # Provides a `rustToolchain` attribute for Nixpkgs that we can use to
         # create a Rust environment
         (self: super: {
-          rustToolchain = super.rust-bin.stable.latest.default;
+          rustToolchain = super.rust-bin.stable.latest.default.override {
+            extensions = ["rust-analyzer" "rust-src"];
+          };
         })
       ];
 
@@ -44,6 +46,7 @@
             rustToolchain
             dive
             trivy
+            helix
           ]) ++ pkgs.lib.optionals pkgs.stdenv.isDarwin (with pkgs; [ libiconv ]);
         };
       });
