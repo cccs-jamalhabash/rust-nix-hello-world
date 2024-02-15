@@ -4,10 +4,11 @@
   inputs = {
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.2305.491812.tar.gz";
     rust-overlay.url = "github:oxalica/rust-overlay"; # A helper for Rust + Nix
+    nil.url = "github:oxalica/nil";
   };
 
   # Flake outputs
-  outputs = { self, nixpkgs, rust-overlay}:
+  outputs = { self, nixpkgs, rust-overlay, nil}:
     let
       # Overlays enable you to customize the Nixpkgs attribute set
       overlays = [
@@ -32,7 +33,7 @@
 
       # Helper to provide system-specific attributes
       forAllSystems = f: nixpkgs.lib.genAttrs allSystems (system: f {
-        pkgs = import nixpkgs { inherit overlays system; config.allowUnfree= true; };
+        pkgs = import nixpkgs { inherit overlays system; config.allowUnfree = true; };
       });
     in
     {
@@ -47,6 +48,7 @@
             dive
             trivy
             helix
+            nil.packages.${system}.default
           ]) ++ pkgs.lib.optionals pkgs.stdenv.isDarwin (with pkgs; [ libiconv ]);
         };
       });
